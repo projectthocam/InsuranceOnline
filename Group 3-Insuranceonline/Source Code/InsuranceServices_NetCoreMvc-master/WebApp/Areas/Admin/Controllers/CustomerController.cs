@@ -1,0 +1,210 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using WebApp.Models;
+using X.PagedList;
+
+namespace WebApp.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    public class CustomerController : Controller
+    {
+        private InsuranceOnlineContext db = new InsuranceOnlineContext();
+
+        public INotyfService _notifyService { get; }
+
+        public CustomerController(INotyfService notifyService)
+        {
+            _notifyService = notifyService;
+        }
+
+        // GET: Admin/Customer
+        public async Task<IActionResult> Index(int page=1, int limit=10)
+        {
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPage = Math.Ceiling((decimal)db.Customers.ToList().Count / limit);
+            if (limit != 10)
+            {
+                ViewBag.Limit = limit;
+            }
+            var result = await db.Customers.ToPagedListAsync(page,limit);
+            return db.Customers != null ? 
+                          View(result) :
+                          Problem("Entity set 'InsuranceOnlineContext.Customers'  is null.");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Disable(int id)
+        {
+            if (db.Customers == null)
+            {
+                return Problem("Entity set 'InsuranceOnlineContext.Customers'  is null.");
+            }
+            var customer = await db.Customers.FindAsync(id);
+            if (customer != null)
+            {
+                customer.Status = false;
+            }
+            _notifyService.Success("Disable Success!!!");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Active(int id)
+        {
+            if (db.Customers == null)
+            {
+                return Problem("Entity set 'InsuranceOnlineContext.Customers'  is null.");
+            }
+            var customer = await db.Customers.FindAsync(id);
+            if (customer != null)
+            {
+                customer.Status = true;
+            }
+            _notifyService.Success("Active Success!!!");
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Admin/Customer/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || db.Customers == null)
+            {
+                return NotFound();
+            }
+
+            var customer = await db.Customers
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
+        }
+
+        // GET: Admin/Customer/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Admin/Customer/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Username,Password,Gender,Birthday,Phone,Address,Email,CreatedAt,UpdatedAt")] Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Add(customer);
+                _notifyService.Success("Add Customer Success!!!");
+                await db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(customer);
+        }
+
+        // GET: Admin/Customer/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || db.Customers == null)
+            {
+                return NotFound();
+            }
+
+            var customer = await db.Customers.FindAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return View(customer);
+        }
+
+        // POST: Admin/Customer/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Password,Gender,Birthday,Phone,Address,Email,CreatedAt,UpdatedAt")] Customer customer)
+        {
+            if (id != customer.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Update(customer);
+                    _notifyService.Success("Update Customer Success!!!");
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CustomerExists(customer.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(customer);
+        }
+
+        // GET: Admin/Customer/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || db.Customers == null)
+            {
+                return NotFound();
+            }
+
+            var customer = await db.Customers
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
+        }
+
+        // POST: Admin/Customer/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (db.Customers == null)
+            {
+                return Problem("Entity set 'InsuranceOnlineContext.Customers'  is null.");
+            }
+            var customer = await db.Customers.FindAsync(id);
+            if (customer != null)
+            {
+                db.Customers.Remove(customer);
+            }
+            _notifyService.Success("Delete Customer Success!!!");
+            await db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool CustomerExists(int id)
+        {
+          return (db.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+    }
+}

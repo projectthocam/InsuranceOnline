@@ -1,0 +1,97 @@
+﻿@using System.Web;
+@{
+    ViewBag.Title = "Faqs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var db = new WebApp.Models.InsuranceOnlineContext();
+    var list = db.Faqs.ToList();
+}
+
+<!-- BANNER -->
+<div class="section banner-page pages">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-page">FAQ'S</div>
+                <ol class="breadcrumb">
+                    <li class="active">Frequently Asked Questions</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- TESTIMONY -->
+<div class="section testimony">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-10 col-md-10">
+                <h2 class="section-heading">
+                    Frequently Asked Questions
+                </h2>
+                <p>You have always wished for a peaceful life. However, life sometimes brings unexpected things. Death , serious illness or accident can happen to anyone , anywhere and finances can be difficult if you do not plan ahead . Let Online Insurance and our comprehensive financial solutions bring you and your family the best protection, benefits and value.</p>
+                <div class="margin-bottom-70"></div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-md-offset-2" style="margin: 0px 6.666667%;">
+                <div class="people">
+                    <img class="user-pic" src="images/faq.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-7">
+
+                <div class="margin-bottom-10"></div>
+                @{
+                    if (list != null)
+                    {
+                        <div class="panel-group panel-faq" id="accordion" role="tablist" aria-multiselectable="true">
+
+                            @foreach(var item in list)
+                            {
+                                var _answer = db.Replies.Where(x=>x.FaqsId==item.Id).ToList();
+                                <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="heading@(item.Id)">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse@(item.Id)" aria-expanded="true" aria-controls="collapse@(item.Id)" class="">
+                                            @item.Question
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse@(item.Id)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading@(item.Id)" aria-expanded="true">
+                                   @{
+                                       if(_answer!=null)
+                                       foreach(var otem in _answer){                                      
+                                                <div class="panel-body">
+                                                    <p>@HttpUtility.UrlDecode(otem.Answer)</p>
+                                                </div>                                       
+                                        }
+                                   }
+                                   
+                                 </div>   
+                            </div>
+                            }
+                        </div>
+                    }
+                }
+                <div class="margin-bottom-50"></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="section cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-7 col-md-offset-1">
+                <h3 class="cta-desc">Get An Insurance Right Now & Save up to 10%</h3>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <a href="@Url.Action("","Contact")" title="" class="btn btn-orange-cta pull-right btn-view-all">GET A QUOTE</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@using X.PagedList;
+@model IPagedList<WebApp.Models.Insurance>
+
+@{
+    ViewData["Title"] = "Insurances Manager";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Insurances Manager</h1>
+
+<p>
+    <a asp-action="Create" class="ta-btn">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                Claim
+            </th>
+            <th>
+                Insurance Type
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Claim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    <a class="btn btn-primary m-r-5" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-primary m-r-5" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-primary m-r-5" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

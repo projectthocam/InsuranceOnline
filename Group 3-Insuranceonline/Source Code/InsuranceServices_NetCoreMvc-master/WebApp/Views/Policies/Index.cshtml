@@ -1,0 +1,146 @@
+﻿@using WebApp.Models
+@model List<Policy>
+@{
+    ViewBag.Title = "Our Policies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BANNER -->
+<div class="section banner-page pages">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-page">Policy</div>
+                <ol class="breadcrumb">
+                    <li><a href="#">Our policies</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SINGLE PAGE -->
+<div class="section pages section-border">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7 col-md-7">
+                <h2 class="section-heading">
+                    Privacy Policy
+                </h2>
+                <div class="section-subheading">We Insure always respect your privacy and protect personal data of you. So we put out the information below about the processing of personal data of you.  You have the right to what and how you can get in touch with us.</div>
+                <ul class="checklist">
+                    <li>100% privacy , personal information and information, contact details, for example functions, their name, contact info, details and history contact details.</li>
+                    <li>If you want to implement your rights or want to explain about these rights, you can contact us in the Contact section.</li>
+                    <li>for any reason you interested in whether you can be allowed to give us information about other people or not, please contact us by e-mail address below before you send us any information.</li>
+                </ul>
+
+            </div>
+            <div class="col-sm-5 col-md-5">
+                <img src="~/images/policy.jpg" alt="" class="img-responsive">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- OPEN POSITION -->
+<div class="section why section-border">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <h2 class="section-heading">
+                    Insurance Policy
+                </h2>
+                <div class="margin-bottom-50"></div>
+
+                <div class="career-tabs" data-example-id="togglable-tabs">
+                    <ul id="myTabs" class="nav nav-tabs" role="tablist">
+
+                        @{
+                            if (Model != null)
+                            {
+                                if (Model.Count > 0)
+                                {
+                                    var i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <li class="@(i==1?"active":"")">
+                                            <a href="#tab@(item.Id)" aria-controls="tab@(item.Id)" role="tab" data-toggle="tab">.</a>
+                                        </li>
+
+                                        i++;
+                                    }
+                                }
+                            }
+                        }
+
+                    </ul>
+
+                    <div id="myTabContent" class="tab-content">
+
+
+                        @{
+                            if (Model != null)
+                            {
+                                if (Model.Count > 0)
+                                {
+                                    var i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <div role="tabpanel" class="tab-pane fade active in" id="tab@(item.Id)">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <div class="body-tab">
+                                                        <h4>@item.Name</h4>
+                                                        <div class="margin-bottom-30"></div>
+                                                        <p>@(System.Web.HttpUtility.HtmlDecode(item.Description))</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        i++;
+                                    }
+                                }
+                            }
+                        }
+
+                    </div>
+                    <p><h3 style="color:blue">Dowload Insurance Policy</h3></p>
+                                                            <a href="~/policy/Life Insurance.rar" class="btn btn-primary m-r-5">
+                                                               Life Insurance Policy Detail
+                                                            </a>            |
+                                                            <a href="~/policy/Medical Insurance.rar" class="btn btn-primary m-r-5">
+                                                                Medical Insurance Policy Detail
+                                                            </a>            |
+                                                            <a href="~/policy/HOME INSURANCE.rar" class="btn btn-primary m-r-5">
+                                                                Home Insurance Policy Detail
+                                                            </a>            | 
+                                                            <a href="~/policy/Motor Insurance.rar" class="btn btn-primary m-r-5">
+                                                                Medical Insurance Policy Detail
+                                                            </a>            |
+
+                </div>
+                <!-- END TAB -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- CTA -->
+<div class="section cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-7 col-md-offset-1">
+                <h3 class="cta-desc">Get An Insurance Right Now & Save up to 10%</h3>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <a href="@Url.Action("","Contact")" title="" class="btn btn-orange-cta pull-right btn-view-all">GET A QUOTE</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+

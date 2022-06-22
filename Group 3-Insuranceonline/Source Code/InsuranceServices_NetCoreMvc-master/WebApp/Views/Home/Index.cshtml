@@ -1,0 +1,314 @@
+﻿@using WebApp.Models;
+@using System.Web;
+@{
+    ViewBag.Title = "Home Page";
+    var db = new InsuranceOnlineContext();
+    var list_services = (List<Category>)ViewBag.list_services;
+    var list_feedbacks = (List<Feedback>)ViewBag.list_feedbacks;
+}
+<!-- BANNER -->
+<div id="slides" class="section banner">
+    <ul class="slides-container">
+        <li>
+            <img src="~/images/slide1.jpg" alt="">
+            <div class="container">
+                <div class="wrap-caption">
+                    <h2 class="caption-heading">
+                        Protect Your Family with Insurance
+                    </h2>
+                    <p class="excerpt">Career development and towards insurance to protect your family, yourself</p>
+                    <a href="@Url.Action("","Services")" class="btn btn-primary" title="LEARN MORE">LEARN MORE</a>
+                    <a href="@Url.Action("","Contact")" class="btn btn-secondary" title="CONTACT US">CONTACT US</a>
+                </div>
+            </div>
+        </li>
+        <li>
+            <img src="~/images/slide2.jpg" alt="">
+            <div class="container">
+                <div class="wrap-caption">
+                    <h2 class="caption-heading">
+                        Quality Protection ; Easy to Claims
+                    </h2>
+                    <p class="excerpt">Quality is always top for the package insured , trusted, and used as criteria</p>
+                    <a href="@Url.Action("","Services")" class="btn btn-primary" title="LEARN MORE">LEARN MORE</a>
+                    <a href="@Url.Action("","Contact")" class="btn btn-secondary" title="CONTACT US">CONTACT US</a>
+                </div>
+            </div>
+        </li>
+        <li>
+            <img src="~/images/slide4.jpg" alt="">
+            <div class="container">
+                <div class="wrap-caption">
+                    <h2 class="caption-heading">
+                        Get An Insurance for Your Travel
+                    </h2>
+                    <p class="excerpt">With many outstanding benefits, Online Insurance will protect you and your loved ones against financial risks such as paying hospital fees for treatment at international hospitals in Vietnam.</p>
+                    <a href="@Url.Action("","Services")" class="btn btn-primary" title="LEARN MORE">LEARN MORE</a>
+                    <a href="@Url.Action("","Contact")" class="btn btn-secondary" title="CONTACT US">CONTACT US</a>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+
+    <nav class="slides-navigation">
+        <div class="container">
+            <a href="#" class="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            <a href="#" class="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        </div>
+    </nav>
+
+</div>
+
+<!-- ABOUT FEATURE -->
+<div class="section feature section-border">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-4 col-md-4">
+                <!-- BOX 1 -->
+                <div class="box-icon-2">
+                    <div class="icon">
+                        <div class="fa fa-globe"></div>
+                    </div>
+                    <div class="body-content">
+                        <div class="heading">The Best in Asia</div>
+                       Create resources and develop online insurance everywhere, strongly hit the service markets, the services are in Asia.
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <!-- BOX 2 -->
+                <div class="box-icon-2">
+                    <div class="icon">
+                        <div class="fa fa-umbrella"></div>
+                    </div>
+                    <div class="body-content">
+                        <div class="heading">Best Support</div>
+                        Support and focus on developing the online insurance management system founded by Insure.
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <!-- BOX 3 -->
+                <div class="box-icon-2">
+                    <div class="icon">
+                        <div class="fa fa-users"></div>
+                    </div>
+                    <div class="body-content">
+                        <div class="heading">Professional Agents</div>
+                        Agents are divided into Asia areas with branded and marked Kihi using online insurance.
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- WHY -->
+<div class="section why section-border">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-6 col-md-6">
+                <h2 class="section-heading">
+                    Why Insure?
+                </h2>
+                <div class="section-subheading">Helping customers access insurance products and a long-term future.</div>
+                <ul class="checklist">
+                    <li>100% Respect your privacy and freedom of choice.</li>
+                    <li>Help you take off your worries for a smooth day.</li>
+                    <li>24/7 order time to save time and effort for customers.</li>
+                </ul>
+                <a href="@Url.Action("","Services")" class="btn btn-primary" title="FIND AN AGENTS">FIND AN AGENTS</a>
+                <div class="margin-bottom-30"></div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <img src="~/images/why.jpg" alt="" class="img-responsive">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- SERVICES -->
+<div class="section services section-border">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <h2 class="section-heading center">
+                    Our Servcies
+                </h2>
+            </div>
+        </div>
+        <div class="row grid-services">
+            @{
+                if (list_services != null && list_services.Count > 0)
+                {
+                    foreach (var item in list_services)
+                    {
+                        <div class="col-sm-6 col-md-4">
+                            <div class="box-image-1">
+                                <div class="image">
+                                    <a href="@Url.Action("Detail","Services", new {cid=item.CategoryId})" title="@item.CategoryName"><img src="@item.Image" alt="@item.CategoryName" class="img-responsive"></a>
+                                </div>
+                                <div class="description">
+                                    <h3 class="blok-title">@item.CategoryName</h3>
+                                    <a href="@Url.Action("Detail","Services", new {cid=item.CategoryId})" title="GET A QUOTE" class="btn btn-secondary">GET A QUOTE</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+
+        </div>
+    </div>
+</div>
+
+<!-- How -->
+<div class="section how section-border">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-6 col-md-6">
+                <img src="~/images/how.jpg" alt="" class="img-responsive">
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <h2 class="section-heading">
+                    How It Works
+                </h2>
+                <div class="section-subheading">Insurance works by pooling together the resources of a large number of people who have similar risks to make sure that the few people who experience loss are protected. When take out an insurance policy and pay an insurance premium, you are putting a little of your own money into that pool.</div>
+                <div class="margin-bottom-50"></div>
+                <dl class="hiw">
+                    <dt><span class="fa fa-hand-o-up"></span></dt>
+                    <dd><h4>Choose Your Insurance</h4>Customers will receive an insurance contract stating the agreements, benefits, etc. like when participating in life insurance through agents. Therefore, customers can completely feel secure when buying insurance online.</dd>
+                    <dt><span class="fa fa-users"></span></dt>
+                    <dd><h4>Select Your Insurance</h4>It is not too difficult to buy life insurance online. Accordingly, users can learn and choose insurance packages through the website or application of the insurance company or through e-commerce channels.</dd>
+                    <dt><span class="fa fa-phone"></span></dt>
+                    <dd><h4>Contact us</h4>If you have any questions about the product, please leave information on the website. A consultant of the insurance company will contact you to answer your questions in detail. This information is very useful to help you understand and make easy decisions.</dd>
+
+                </dl>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- TESTIMONY -->
+<div class="section testimony section-border">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-7 col-md-8">
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="section-title center cwhite">
+                            <h2 class="section-heading">What People Say</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="owl-testimony">
+                    @{
+                        if (list_feedbacks != null && list_feedbacks.Count > 0)
+                        {
+                            foreach (var item in list_feedbacks)
+                            {
+                                var _s = db.Insurances.FirstOrDefault(x => x.Id == item.InsuranceId);
+                                var _c = db.Categories.FirstOrDefault(x => x.CategoryId == _s.CategoryId);
+                                var _n = db.Customers.FirstOrDefault(x => x.Id == item.CustomerId);
+                                <div class="item">
+                                    <div class="box-testimony">
+                                        <div class="quote-box">
+                                            <blockquote>
+                                                @HttpUtility.UrlDecode(item.FeedbackContent)
+                                            </blockquote>
+                                            <p class="quote-name">
+                                                @(_n!=null?_n.Username:"")
+                                                <span>Service: @(_c!=null?_c.CategoryName:"") - @(_s!=null?_s.Name:"")</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="col-sm-5 col-md-4">
+                <div class="people">
+                    <img class="user-pic" src="~/images/say.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CLIENT -->
+<div class="section stat-client">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="section-heading center">
+                    <h2 class="section-heading">Our Partners</h2>
+                </div>
+            </div>
+        </div>
+        <div class="margin-bottom-50"></div>
+        <div class="row">
+
+            <div class="col-sm-3 col-md-3">
+                <div class="client-img">
+                    <a href="#"><img src="~/images/partner4.png" alt="" class="img-responsive"></a>
+                </div>
+            </div>
+
+            <div class="col-sm-3 col-md-3">
+                <div class="client-img">
+                    <a href="#"><img src="~/images/partner1.png" alt="" class="img-responsive"></a>
+                </div>
+            </div>
+
+            <div class="col-sm-3 col-md-3">
+                <div class="client-img">
+                    <a href="#"><img src="~/images/partner2.png" alt="" class="img-responsive"></a>
+                </div>
+            </div>
+
+            <div class="col-sm-3 col-md-3">
+                <div class="client-img">
+                    <a href="#"><img src="~/images/partner3.png" alt="" class="img-responsive"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="section cta">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-12 col-md-7 col-md-offset-1">
+                <h3 class="cta-desc">Get An Insurance Right Now & Save up to 10%</h3>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <a href="@Url.Action("","Contact")" title="" class="btn btn-orange-cta pull-right btn-view-all">GET A QUOTE</a>
+            </div>
+
+        </div>
+    </div>
+</div>

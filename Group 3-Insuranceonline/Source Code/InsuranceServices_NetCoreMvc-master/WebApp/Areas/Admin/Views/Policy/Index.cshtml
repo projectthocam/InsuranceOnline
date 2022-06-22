@@ -1,0 +1,48 @@
+﻿@model X.PagedList.IPagedList<WebApp.Models.Policy>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Policy Manager</h1>
+
+<p>
+    <a asp-action="Create" class="ta-btn">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th class="processed">
+                Description
+            </th>
+            <th>
+                Insurance
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="processed">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Insurance.Name)
+            </td>
+            <td>
+                <a class="btn btn-primary m-r-5" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-primary m-r-5" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="btn btn-primary m-r-5" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

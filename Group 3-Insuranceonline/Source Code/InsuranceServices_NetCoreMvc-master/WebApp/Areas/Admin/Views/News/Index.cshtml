@@ -1,0 +1,54 @@
+﻿@using X.PagedList;
+@model IPagedList<WebApp.Models.News>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Posts Manager</h1>
+
+<p>
+    <a asp-action="Create" class="ta-btn">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>
+                Title
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                Created At
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.Image" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    <a class="btn btn-primary m-r-5" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-primary m-r-5" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-primary m-r-5" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

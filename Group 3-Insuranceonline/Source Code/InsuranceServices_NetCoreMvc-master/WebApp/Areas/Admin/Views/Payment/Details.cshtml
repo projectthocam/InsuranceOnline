@@ -1,0 +1,39 @@
+﻿@model WebApp.Models.Payment
+
+@{
+    ViewData["Title"] = "Contract's Payment Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Payment Details</h1>
+<p>
+    <a href="@Url.Action("Details","Contract", new {id=Model.Contract.Id})" class="ta-btn">Back</a>
+    <a asp-action="Create" class="ta-btn">Create New</a>
+</p>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Contract ID
+        </dt>
+        <dd class="col-sm-10">
+            <a href="#">#@Model.ContractId</a>
+        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Total)
+        </dt>
+        <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Total)
+        </dd>
+            @{
+                if(Model.PaymentDetails!=null && Model.PaymentDetails.ToList().Count > 0)
+                {
+                    foreach(var item in Model.PaymentDetails.ToList())
+                    {
+                        
+                    }
+                }
+        }
+        </dd>
+    </dl>
+</div>
+

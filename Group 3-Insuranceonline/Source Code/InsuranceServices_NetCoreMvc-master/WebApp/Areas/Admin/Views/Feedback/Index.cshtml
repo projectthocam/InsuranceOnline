@@ -1,0 +1,48 @@
+﻿@model X.PagedList.IPagedList<WebApp.Models.Feedback>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Feedback Manager</h1>
+
+<p>
+    <a asp-action="Create" class="ta-btn">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Customer
+            </th>
+            <th>
+                Insurance
+            </th>
+            <th class="processed">
+                Feedback
+            </th>           
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Insurance.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedbackContent)
+            </td>
+            <td>
+                <a class="btn btn-primary m-r-5" asp-action="Edit" asp-route-id="@item.FeedbackId">Edit</a> |
+                <a class="btn btn-primary m-r-5" asp-action="Details" asp-route-id="@item.FeedbackId">Details</a> |
+                <a class="btn btn-primary m-r-5" asp-action="Delete" asp-route-id="@item.FeedbackId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebApp.Models.Contract>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>List</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Insurance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpiredAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Insurance.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration) Years
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpiredAt)
+                </td>
+                <td>
+                    @{
+                        if (item.Status == null)
+                        {
+                            <span class="cancelled">Cancelled</span>
+                        }
+                        else
+                        if (item.Status == true)
+                        {
+                            <span class="completed">Completed</span>
+                        }
+                        else
+                        {
+                            <span class="maintaining">Maintaining</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+
+                <td>
+                    <a class="btn btn-primary m-r-5" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-primary m-r-5" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-primary m-r-5" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
